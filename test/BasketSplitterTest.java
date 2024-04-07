@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BasketSplitterTest {
 
     @Test
-    public void test1_Split() throws IOException {
+    public void ShouldSplit() throws IOException {
         BasketSplitter splitter = new BasketSplitter("config.json"); // Assuming config.json exists
         List<String> items = Arrays.asList(
                 "Cocoa Butter",
@@ -27,22 +27,17 @@ public class BasketSplitterTest {
             put("Pick-up point", Arrays.asList(
                     "Fond - Chocolate"));
             put("Courier", Arrays.asList(
-                    "Cocoa Butter", "Table Cloth 54x72 White", "Cookies - Englishbay Wht", "Tart - Raisin And Pecan", "Flower - Daisies"));
+                    "Cocoa Butter", "Tart - Raisin And Pecan", "Table Cloth 54x72 White",  "Flower - Daisies", "Cookies - Englishbay Wht"));
         }};
 
         Map<String, List<String>> deliverySplit = splitter.split(items);
 
         assertEquals(output.size(), deliverySplit.size());
-
-        for (Map.Entry<String, List<String>> entry : output.entrySet())
-        {
-            assertArrayEquals(entry.getValue().stream().sorted().toArray(),
-                    deliverySplit.get(entry.getKey()).stream().sorted().toArray());
-        }
+        assertEquals(output, deliverySplit);
     }
 
     @Test
-    public void test1_GetDeliveryGroups() throws IOException {
+    public void ShouldGetDeliveryGroups() throws IOException {
         BasketSplitter splitter = new BasketSplitter("config.json");
         List<String> items = Arrays.asList(
                 "Cocoa Butter",
@@ -73,20 +68,15 @@ public class BasketSplitterTest {
             put("Express Collection", Arrays.asList(
                     "Tart - Raisin And Pecan", "Flower - Daisies", "Fond - Chocolate", "Cookies - Englishbay Wht"));
         }};
-        Map<String, List<String>> deliveryOptions = splitter.GetDeliveryGroups(items);
+        Map<String, List<String>> deliveryGroups = splitter.GetDeliveryGroups(items);
 
-        assertNotNull(deliveryOptions);
-        assertEquals(8, deliveryOptions.size());
-
-        for (Map.Entry<String, List<String>> entry : output.entrySet())
-        {
-            assertArrayEquals(entry.getValue().stream().sorted().toArray(),
-                    deliveryOptions.get(entry.getKey()).stream().sorted().toArray());
-        }
+        assertNotNull(deliveryGroups);
+        assertEquals(8, deliveryGroups.size());
+        assertEquals(output, deliveryGroups);
     }
 
     @Test
-    public void test1_GetTheLargestDelivery() throws IOException {
+    public void ShouldGetTheLargestDelivery() throws IOException {
         BasketSplitter splitter = new BasketSplitter("config.json");
         Map<String, List<String>> options = new HashMap<>();
         options.put("Option1", Arrays.asList("Product1", "Product2", "Product3"));
@@ -100,7 +90,7 @@ public class BasketSplitterTest {
     }
 
     @Test
-    public void test1_GetTheLargestDelivery_EmptyInput() throws IOException {
+    public void ShouldGetTheLargestDelivery_EmptyInput() throws IOException {
         BasketSplitter splitter = new BasketSplitter("config.json");
         Map<String, List<String>> options = new HashMap<>();
 

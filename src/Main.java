@@ -31,6 +31,7 @@ public class Main {
                 System.out.println("Delivery option: " + deliveryOption);
                 System.out.println("Products size: " + products.size());
                 System.out.println("Products: " + products);
+                System.out.println();
             }
         }
         catch (IOException e){
